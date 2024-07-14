@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block head %} Book Details {% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="col-12 d-flex flex-wrap  px-5 pt-3 align-items-center">
+
+    <div class="col-6">
+        <img src="{{book.image.url}}" style="width: 60%;" alt="">
+    </div>
+
+    <div class="col-6">
+        <div class="card d-flex flex-wrap m-3" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight: bold;">{{book.title}}</h5>
+                <p class="card-text">Details : {{book.description}}</p>
+                <p class="card-title">Price : ${{book.borrowing_price}}</p>
+                <p>
+                    Category : {% for cat in book.categories.all %}
+                    <button class="btn btn-primary btn-sm m-2" disabled> {{cat.name}} </button>
+                    {% endfor %}
+                </p>
+
+                {% if request.user.is_authenticated %}
+                <form method="POST" action="{% url 'borrow_book' book.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit">Borrow</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card m-2">
+    <h4 style="font-weight: bold;padding: 3;">Total Reviews : {{comments|length}}</h4>
+    {% for comment in comments %}
+    <div class="card-body border m-2">
+        <h5 style="font-weight: bold;">{{comment.user.username}}  <small>{{comment.created_at}}</small> </h5> 
+        <p>{{comment.text}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% if request.user.is_authenticated %}
+{% if borrowed %}
+
+<div class="card m-2">
+    <div class="card-body">
+        <h1>Add your Review</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{comment_form | crispy}}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+
+{% endblock %}

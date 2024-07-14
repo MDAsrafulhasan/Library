@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %} Profile {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+  <div class="container mt-5" style="width: 80%;margin: auto;background-color: white; ">
+    <h3>Borrow Book History</h3>
+    <br>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Book Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Date</th>
+          <th scope="col">Return</th>
+        </tr>
+      </thead>
+      {% for books in borrow_books %}
+      <tbody>
+        <tr>
+          <th scope="row">{{books.book.id}}</th>
+          <td>{{books.book.title}}</td>
+          <td>{{books.book.borrowing_price}}</td>
+          <td>{{books.borrow_date}}</td>
+          {% if not books.is_returned %}
+          <td> <a href="{% url 'return_book' books.book.id %}" class="btn btn-primary">Pay</a> </td>
+          {% else %}
+          <td>Done</td>
+          {% endif %}
+        </tr>
+      </tbody>
+      {% endfor %}
+  
+    </table>
+</div>
+
+{% endblock %}

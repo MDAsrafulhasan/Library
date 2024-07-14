@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block head %} {{type}} Page {% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="container mt-5" style="width: 50%;margin: auto;background-color: white; ">
+    <h1>{{type}} page</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{ form|crispy }} -->
+        {% for fr in form %}
+        {{fr.label_tag}}
+        {{fr}}
+        {{fr.errors|striptags}}
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}
