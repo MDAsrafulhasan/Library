@@ -27,8 +27,8 @@ environ.Env.read_env()
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#uf#h(@n776c*&msz4)=gxrhe*8whj#7wd_s_@#a1ok@6-3q!x'
-
+# SECRET_KEY = 'django-insecure-#uf#h(@n776c*&msz4)=gxrhe*8whj#7wd_s_@#a1ok@6-3q!x'
+CSRF_TRUSTED_ORIGINS = ['https://library-g89c.onrender.com', 'https://*.127.0.0.1']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
